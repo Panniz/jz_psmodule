@@ -1,0 +1,21 @@
+{
+    "name": "panniz/jz_psmodule",
+    "description": "Base Prestashop Module",
+    "type": "prestashop-module",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Panniz\\JzPsmodule\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jacopo Zane",
+            "email": "jacopo.zane@gmail.com"
+        }
+    ],
+    "require": {},
+    "config": {
+        "optimize-autoloader": true
+    }
+}

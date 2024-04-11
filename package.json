@@ -1,0 +1,35 @@
+{
+  "name": "jz_psmodule",
+  "version": "1.0.0",
+  "description": "Base Prestashop Module",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "watch": "webpack --watch",
+    "watch:prod": "webpack --watch --mode=production --node-env=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panniz/jz_psmodule.git"
+  },
+  "author": "Jacopo Zane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/panniz/jz_psmodule/issues"
+  },
+  "homepage": "https://github.com/panniz/jz_psmodule#readme",
+  "devDependencies": {
+    "@webpack-cli/generators": "^3.0.7",
+    "css-loader": "^6.11.0",
+    "esbuild-loader": "^4.1.0",
+    "mini-css-extract-plugin": "^2.8.1",
+    "sass": "^1.74.1",
+    "sass-loader": "^14.1.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-remove-empty-scripts": "^1.0.4",
+    "stylelint": "^16.3.1",
+    "stylelint-config-standard-scss": "^13.1.0"
+  }
+}
