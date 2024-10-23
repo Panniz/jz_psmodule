@@ -18,6 +18,10 @@ interface ModuleInterface
 
     public function getDatabase(): \Db;
 
+    public function getInstallQueries(): array;
+
+    public function getUninstallQueries(): array;
+
     /**
      * @return object|false If a container is not available it returns false
      */

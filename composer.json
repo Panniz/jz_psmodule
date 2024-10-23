@@ -16,6 +16,8 @@
     ],
     "require": {},
     "config": {
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "prepend-autoloader": false
     }
 }

@@ -1,16 +1,28 @@
 <?php
+
 namespace Panniz\JzPsmodule;
 
 use Panniz\JzPsmodule\Hook\HookDispatcher;
+use Panniz\JzPsmodule\Hook\HookProvider;
 use Panniz\JzPsmodule\Install\Installer;
 
-trait ModuleTrait
+class AbstractModule extends \Module implements ModuleInterface
 {
-    protected \Db $db;
+    protected \WeakReference $db;
 
     protected array $hooks = [];
 
+    protected array $installQueries = [];
+
+    protected array $uninstallQueries = [];
+
     protected HookDispatcher $hookDispatcher;
+
+    public function __construct()
+    {
+        $this->db = new \WeakReference(\Db::getInstance());
+        parent::__construct();
+    }
 
     public function install(): bool
     {
@@ -29,7 +41,14 @@ trait ModuleTrait
 
     public function getDatabase(): \Db
     {
-        return $this->db;
+        $db = $this->db->get();
+
+        if ($db === null) {
+            $this->db = new \WeakReference(\Db::getInstance());
+            $db = $this->db->get();
+        }
+
+        return $db;
     }
 
     public function getHooks(): array
@@ -39,9 +58,11 @@ trait ModuleTrait
 
     public function getHookDispatcher(): HookDispatcher
     {
-        if(!isset($this->hookDispatcher)){
-            $this->hookDispatcher = new HookDispatcher($this);
+        if (!isset($this->hookDispatcher)) {
+            $hookProvider = new HookProvider($this->getHooks());
+            $this->hookDispatcher = new HookDispatcher($hookProvider);
         }
+
         return $this->hookDispatcher;
     }
 
@@ -56,5 +77,15 @@ trait ModuleTrait
     public function isUsingNewTranslationSystem(): bool
     {
         return true;
+    }
+
+    public function getInstallQueries(): array
+    {
+        return $this->installQueries;
+    }
+
+    public function getUninstallQueries(): array
+    {
+        return $this->uninstallQueries;
     }
 }

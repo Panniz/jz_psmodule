@@ -7,30 +7,16 @@ use Panniz\JzPsmodule\ModuleInterface;
 
 class Installer
 {
-    protected const QUERIES = [];
-
-    protected const UNINSTALL_QUERIES = [];
-
     public static function install(ModuleInterface $module): bool
     {
         return
             (bool)$module->registerHook($module->getHooks()) &&
-            self::installDatabase();
+            self::executeQueries($module->getInstallQueries());
     }
 
-    public static function uninstall(): bool
+    public static function uninstall(ModuleInterface $module): bool
     {
-        return self::uninstallDatabase();
-    }
-
-    private static function installDatabase(): bool
-    {
-        return self::executeQueries(static::QUERIES);
-    }
-
-    private static function uninstallDatabase(): bool
-    {
-        return self::executeQueries(static::UNINSTALL_QUERIES);
+        return self::executeQueries($module->getUninstallQueries());
     }
 
     private static function executeQueries(array $queries): bool

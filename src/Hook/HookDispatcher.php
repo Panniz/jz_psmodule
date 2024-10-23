@@ -8,13 +8,11 @@ use Panniz\JzPsmodule\ModuleInterface;
 
 class HookDispatcher
 {
-    protected array $availableHooks = [];
+    protected HookProvider $hookProvider;
 
-    protected ModuleInterface $module;
-
-    public function __construct(ModuleInterface $module)
+    public function __construct(HookProvider $hookProvider)
     {
-        $this->module = $module;
+        $this->hookProvider = $hookProvider;
     }
 
     /**
@@ -28,12 +26,9 @@ class HookDispatcher
     public function dispatch(string $hookName, array $params = [])
     {
         $hookClassName = '\\' . __NAMESPACE__ . '\\Hooks\\' . ucfirst(preg_replace('~^hook~', '', $hookName));
+        $hookObj = $this->hookProvider->getHook($hookClassName);
 
-        if (\class_exists($hookClassName) && is_subclass_of($hookClassName, AbstractHook::class)) {
-            /**
-             * @var \Fincons\Qaplaorders\Hooks\HookInterface
-             */
-            $hookObj = new $hookClassName($this->module);
+        if ($hookObj !== null) {
             return $hookObj->exec($params);
         }
 
